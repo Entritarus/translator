@@ -15,7 +15,7 @@ translator <asm file name goes here>
 
 ## Supported instructions
 
-1. ALU Instructions
+###### ALU Instructions
   * ```ADD Rd, Rs```
     * Add two registers and store result in Rd
   * ADC Rd, Rs
@@ -48,17 +48,17 @@ translator <asm file name goes here>
     * Rotate Rd through carry to the left
   * ROR Rd, Rs
     * Rotate Rd through carry to the right
-2. Compare Instruction
+###### Compare Instruction
   * CMP Rd, Rs 
     * Perform Rd - Rs and get SREG flags changed as a result
-3. Load/Store Instructions
+###### Load/Store Instructions
   * LDI Rd, A 
     * Load A into Rd
   * LDR Rd, A 
     * Load value from RAM at address A and store into Rd
   * STR Rd, A
     * Store value into RAM at address A from Rd
-4. Branch Instructions
+###### Branch Instructions
   * JMP A 
     * Jump to instruction A. Instructions start from 0.
   * BRCC A
