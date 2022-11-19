@@ -1,5 +1,5 @@
 # A Translator for Logisim MPU
-## Converts your assembly code into hex machine code
+###### Converts your assembly code into hex machine code
 
 ## Conventions
 * Max line length is 120 characters
