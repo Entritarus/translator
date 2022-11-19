@@ -116,7 +116,7 @@ int main(int argc, int **argv) {
 			opcode = translate(linebuf); // decode opcode from line
 		else 
 		{
-			printf("Error: Maximum line length is 120 characters");
+			printf("Error: Maximum line length is 120 characters\n");
 			break;
 		}
 		if (lineNum < N_ROM) // maximum instruction count is 256 because JMP and branch instructions can only go to addresses in range 0..255
