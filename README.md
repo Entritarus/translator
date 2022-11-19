@@ -15,23 +15,41 @@ translator <asm file name goes here>
 
 ## Supported instructions
 
-1. ALU instructions
+1. ALU Instructions
   * ```ADD Rd, Rs```
-    - Add two registers and store result in Rd
+    * Add two registers and store result in Rd
   * ADC Rd, Rs
-    - Add two registers with carry and store result in Rd
+    * Add two registers with carry and store result in Rd
   * INC Rd, Rs
-    
+    *
   * DEC Rd, Rs
+    * 
   * NEG Rd, Rs
+    * 
   * SUB Rd, Rs
+    * 
   * SBC Rd, Rs
+    * 
   * MOV Rd, Rs
+    * 
   * AND Rd, Rs
+    * 
   * OR Rd, Rs
+    * 
   * XOR Rd, Rs
+    * 
   * NOT Rd, Rs
+    * 
   * LSL Rd, Rs
+    * 
   * LSR Rd, Rs
+    * 
   * ROL Rd, Rs
+    * 
   * ROR Rd, Rs
+    * 
+2. Compare Instruction
+
+3. Load/Store Instructions
+
+4. Branch Instructions
