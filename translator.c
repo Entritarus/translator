@@ -191,7 +191,8 @@ int translate(char *buf) {
 			int Rd = 0, Rs = 0;
 			char command[5];
 			int count = sscanf(buf, "%s R%d, R%d", command, &Rd, &Rs); // get instruction and input parameters
-			if (count < (cmd == INC || cmd == DEC || cmd == NEG || cmd == NOT || cmd == LSL || cmd == LSR || cmd == ROL || cmd == ROR ? 2 : 3)) { // instructions require 1 or 2 operands
+			if (count < (cmd == INC || cmd == DEC || cmd == NEG || cmd == NOT || cmd == LSL || cmd == LSR || cmd == ROL || cmd == ROR ? 2 : 3)) { 
+				// instructions require 1 or 2 operands
 				printf("Error: %s: Not enough input parameters\n", command);
 				return -1;
 			}
