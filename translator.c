@@ -12,8 +12,11 @@
 #define CMD_LEN 5
 
 #define N_GPR 8
+#define MAX_GPR 7
 #define N_ROM 256
+#define MAX_ROM 255
 #define N_RAM 16
+#define MAX_RAM 15
 
 int translate(char *buf);
 
@@ -113,7 +116,7 @@ int main(int argc, int **argv) {
 			opcode = translate(linebuf); // decode opcode from line
 		else 
 		{
-			printf("Error: Maximum line length is 120 characters");
+			printf("Error: Maximum line length is 120 characters\n");
 			break;
 		}
 		if (lineNum < N_ROM) // maximum instruction count is 256 because JMP and branch instructions can only go to addresses in range 0..255
@@ -207,13 +210,13 @@ int translate(char *buf) {
 			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
 				opcode |= Rd << 8;
 			} else {
-				printf("Error: Rd must be in range 0..7\n");
+				printf("Error: Rd must be in range 0..MAX_GPR\n");
 				return -1;
 			}
 			if (Rs >= 0 && Rs < N_GPR) { // check range for Rs. For single operand instructions Rs is always 0
 				opcode |= Rs << 0;
 			} else {
-				printf("Error: Rs must be in range 0..7\n");
+				printf("Error: Rs must be in range 0..MAX_GPR\n");
 				return -1;
 			}
 		}
@@ -233,21 +236,21 @@ int translate(char *buf) {
 			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
 				opcode |= Rd << 8;
 			} else {
-				printf("Error: Rd must be in range 0..7\n");
+				printf("Error: Rd must be in range 0..MAX_GPR\n");
 				return -1;
 			}
 			if (cmd == LDI) { // check ranges for A
 				if (A >= 0 && A < N_ROM)
 					opcode |= A;
 				else {
-					printf("Error: A must be in range 0..255\n");
+					printf("Error: A must be in range 0..MAX_ROM\n");
 					return -1;
 				}
 			} else {
 				if (A >= 0 && A < N_RAM)
 					opcode |= A;
 				else {
-					printf("Error: A must be in range 0..15\n");
+					printf("Error: A must be in range 0..MAX_RAM\n");
 					return -1;
 				}
 			}
@@ -283,7 +286,7 @@ int translate(char *buf) {
 			if (A >= 0 && A < N_ROM)
 				opcode |= A;
 			else {
-				printf("Error: A must be in range 0..255\n");
+				printf("Error: A must be in range 0..MAX_ROM\n");
 				return -1;
 			}
 		}
