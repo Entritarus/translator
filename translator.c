@@ -155,14 +155,15 @@ int translate(char *buf) {
 		printf("Error: Unknown command\n");
 		return -1;
 	}
-	// check if OR instruction is actually ROR
+	// check if OR instruction is actually ROR or XOR
 	if (buf != comloc) { 
 		// buf points at the first character of the buffer
 		// comloc points at the first character of the found instruction
 		// they are different if 
 		// 1. there are spaces before instruction
-		// 2. OR is actually ROR because strstr found OR in ROR
+		// 2. OR is actually ROR or XOR because strstr can find OR in ROR and XOR
 		if (*(comloc-1) == 'R') cmd = ROR;
+		if (*(comloc-1) == 'X') cmd = XOR;
 	}
 	printf("Command found: %s\n", ASMcmd[cmd]);
 	unsigned int opcode = 0;
