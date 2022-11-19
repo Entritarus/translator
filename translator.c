@@ -116,7 +116,7 @@ int main(int argc, int **argv) {
 			opcode = translate(linebuf); // decode opcode from line
 		else 
 		{
-			printf("Error: Maximum line length is 120 characters\n");
+			printf("Error: Maximum line length is 120 characters");
 			break;
 		}
 		if (lineNum < N_ROM) // maximum instruction count is 256 because JMP and branch instructions can only go to addresses in range 0..255
@@ -210,13 +210,13 @@ int translate(char *buf) {
 			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
 				opcode |= Rd << 8;
 			} else {
-				printf("Error: Rd must be in range 0..MAX_GPR\n");
+				printf("Error: Rd must be in range 0..%d\n", MAX_GPR);
 				return -1;
 			}
 			if (Rs >= 0 && Rs < N_GPR) { // check range for Rs. For single operand instructions Rs is always 0
 				opcode |= Rs << 0;
 			} else {
-				printf("Error: Rs must be in range 0..MAX_GPR\n");
+				printf("Error: Rs must be in range 0..%d\n", MAX_GPR);
 				return -1;
 			}
 		}
@@ -236,21 +236,21 @@ int translate(char *buf) {
 			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
 				opcode |= Rd << 8;
 			} else {
-				printf("Error: Rd must be in range 0..MAX_GPR\n");
+				printf("Error: Rd must be in range 0..%d\n", MAX_GPR);
 				return -1;
 			}
 			if (cmd == LDI) { // check ranges for A
-				if (A >= 0 && A < N_ROM)
+				if (A >= 0 && A < 256) // this is due to the size of machine code instruction size
 					opcode |= A;
 				else {
-					printf("Error: A must be in range 0..MAX_ROM\n");
+					printf("Error: A must be in range 0..%d\n", 255); 
 					return -1;
 				}
 			} else {
 				if (A >= 0 && A < N_RAM)
 					opcode |= A;
 				else {
-					printf("Error: A must be in range 0..MAX_RAM\n");
+					printf("Error: A must be in range 0..%d\n", MAX_RAM);
 					return -1;
 				}
 			}
@@ -286,7 +286,7 @@ int translate(char *buf) {
 			if (A >= 0 && A < N_ROM)
 				opcode |= A;
 			else {
-				printf("Error: A must be in range 0..MAX_ROM\n");
+				printf("Error: A must be in range 0..%d\n", MAX_ROM);
 				return -1;
 			}
 		}
