@@ -4,10 +4,16 @@
 #include <ctype.h>
 #define LINE_LEN 120
 #define LINEBUF_LEN 121 
-#define CMD_CNT 29
-#define CMD_LEN 5
+
 // string length is always 1 symbol longer 
 // than the actual string length due to \0 symbol 
+
+#define CMD_CNT 29
+#define CMD_LEN 5
+
+#define N_GPR 8
+#define N_ROM 256
+#define N_RAM 16
 
 int translate(char *buf);
 
@@ -98,8 +104,10 @@ int main(int argc, int **argv) {
 	unsigned int opcode = 0x0;
 	unsigned int lineNum = 0;
 	while(!feof(fp_src)) {
-		if(fgets(linebuf, LINE_LEN+1, fp_src) == NULL) // get line
+		if(fgets(linebuf, LINE_LEN+1, fp_src) == NULL) {// get line
 			printf("Error: File read failure\n"); 
+			break;
+		}
 		if(strlen(linebuf) == 1) continue; // skip empty lines with only \n symbol
 		if(linebuf[LINE_LEN] == -1) // line length detection
 			opcode = translate(linebuf); // decode opcode from line
@@ -108,10 +116,10 @@ int main(int argc, int **argv) {
 			printf("Error: Maximum line length is 120 characters");
 			break;
 		}
-		if (lineNum < 256) // maximum instruction count is 256 because JMP and branch instructions can only go to addresses in range 0..255
+		if (lineNum < N_ROM) // maximum instruction count is 256 because JMP and branch instructions can only go to addresses in range 0..255
 			lineNum++; 
 		else {
-			printf("Error: Max instruction count exceeded (256)\n");
+			printf("Error: Max instruction count exceeded (N_ROM)\n");
 		}
 		if(opcode != -1){
 			//write to file
@@ -127,11 +135,11 @@ int main(int argc, int **argv) {
 	char lineNumStr[4] = {};
 	sprintf(lineNumStr, "%d", lineNum);
 	strcat(haltCmd, lineNumStr);
-	
 	// because in the code the halt command is the lineNum + 1 st command,
 	// but in the memory it is less by one, the +1 and -1 vanish
 	opcode = translate(haltCmd);
 	fprintf(hex, "%04x ", opcode);
+	
 	fclose(fp_src);
 	fclose(hex);
 	free(outName);
@@ -196,13 +204,13 @@ int translate(char *buf) {
 				printf("Error: %s: Not enough input parameters\n", command);
 				return -1;
 			}
-			if (Rd >= 0 && Rd <= 7) { // check range for Rd
+			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
 				opcode |= Rd << 8;
 			} else {
 				printf("Error: Rd must be in range 0..7\n");
 				return -1;
 			}
-			if (Rs >= 0 && Rs <= 7) { // check range for Rs. For single operand instructions Rs is always 0
+			if (Rs >= 0 && Rs < N_GPR) { // check range for Rs. For single operand instructions Rs is always 0
 				opcode |= Rs << 0;
 			} else {
 				printf("Error: Rs must be in range 0..7\n");
@@ -222,21 +230,21 @@ int translate(char *buf) {
 				printf("Error: %s: Not enough input parameters\n", command);
 				return -1;
 			}
-			if (Rd >= 0 && Rd <= 7) { // check range for Rd
+			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
 				opcode |= Rd << 8;
 			} else {
 				printf("Error: Rd must be in range 0..7\n");
 				return -1;
 			}
 			if (cmd == LDI) { // check ranges for A
-				if (A >= 0 && A <= 255)
+				if (A >= 0 && A < N_ROM)
 					opcode |= A;
 				else {
 					printf("Error: A must be in range 0..255\n");
 					return -1;
 				}
 			} else {
-				if (A >= 0 && A <= 15)
+				if (A >= 0 && A < N_RAM)
 					opcode |= A;
 				else {
 					printf("Error: A must be in range 0..15\n");
@@ -272,7 +280,7 @@ int translate(char *buf) {
 				printf("Error: %s: Not enough input parameters\n", command);
 				return -1;
 			}
-			if (A >= 0 && A <= 255)
+			if (A >= 0 && A < N_ROM)
 				opcode |= A;
 			else {
 				printf("Error: A must be in range 0..255\n");
