@@ -5,6 +5,7 @@
 * Max line length is 120 characters
 * Max instruction count is 256 due to ROM size
 * RAM size is 16 bytes
+* The rest is pretty much the same as in the AVR assembler
 ## How to use
 1. Compile it
 2. Open terminal
@@ -12,7 +13,7 @@
 ```
 translator <asm file name goes here>
 ```
-
+4. Creates a .hex file with the same name as the input
 ## Supported instructions
 
 1. ALU Instructions
