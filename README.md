@@ -16,10 +16,12 @@ translator <asm file name goes here>
 ## Supported instructions
 
 1. ALU instructions
-  * ADD Rd, Rs
-    *
+  * ```ADD Rd, Rs```
+    - Add two registers and store result in Rd
   * ADC Rd, Rs
+    - Add two registers with carry and store result in Rd
   * INC Rd, Rs
+    
   * DEC Rd, Rs
   * NEG Rd, Rs
   * SUB Rd, Rs
