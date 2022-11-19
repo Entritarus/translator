@@ -18,62 +18,62 @@ translator <asm file name goes here>
 1. ALU Instructions
   * ```ADD Rd, Rs```
     * Add two registers and store result in Rd
-  * ADC Rd, Rs
+  * ```ADC Rd, Rs```
     * Add two registers with carry and store result in Rd
-  * INC Rd
+  * ```INC Rd```
     * Increment Rd
-  * DEC Rd, Rs
+  * ```DEC Rd, Rs```
     * Decrement Rd
-  * NEG Rd, Rs
+  * ```NEG Rd, Rs```
     * Negate Rd
-  * SUB Rd, Rs
+  * ```SUB Rd, Rs```
     * Subtract Rs from Rd and store result in Rd
-  * SBC Rd, Rs
+  * ```SBC Rd, Rs```
     * Subtract Rs from Rd with carry and store result in Rd
-  * MOV Rd, Rs
+  * ```MOV Rd, Rs```
     * Copy Rs to Rd
-  * AND Rd, Rs
+  * ```AND Rd, Rs```
     * Rd & Rs and store result in Rd
-  * OR Rd, Rs
+  * ```OR Rd, Rs```
     * Rd | Rs and store result in Rd
-  * XOR Rd, Rs
+  * ```XOR Rd, Rs```
     * Rd ^ Rs and store result in Rd
-  * NOT Rd
+  * ```NOT Rd```
     * Invert all bits in Rd
-  * LSL Rd, Rs
+  * ```LSL Rd, Rs```
     * Logical shift left of Rd
-  * LSR Rd, Rs
+  * ```LSR Rd, Rs```
     * Logical shift right of Rd
-  * ROL Rd
+  * ```ROL Rd```
     * Rotate Rd through carry to the left
-  * ROR Rd, Rs
+  * ```ROR Rd, Rs```
     * Rotate Rd through carry to the right
 2. Compare Instruction
-  * CMP Rd, Rs 
+  * ```CMP Rd, Rs ```
     * Perform Rd - Rs and get SREG flags changed as a result
 3. Load/Store Instructions
-  * LDI Rd, A 
+  * ```LDI Rd, A ```
     * Load A into Rd
-  * LDR Rd, A 
+  * ```LDR Rd, A``` 
     * Load value from RAM at address A and store into Rd
-  * STR Rd, A
+  * ```STR Rd, A```
     * Store value into RAM at address A from Rd
 4. Branch Instructions
-  * JMP A 
+  * ```JMP A```
     * Jump to instruction A. Instructions start from 0.
-  * BRCC A
+  * ```BRCC A```
     * Branch to address A if Carry flag is cleared
-  * BRCS A
+  * ```BRCS A```
     * Branch to address A if Carry flag is set
-  * BRZC A
+  * ```BRZC A```
     * Branch to address A if Zero flag is cleared
-  * BRZS A
+  * ```BRZS A```
     * Branch to address A if Zero flag is set
-  * BRNC A
+  * ```BRNC A```
     * Branch to address A if Negative flag is cleared
-  * BRNS A
+  * ```BRNS A```
     * Branch to address A if Negative flag is set
-  * BRVC A
+  * ```BRVC A```
     * Branch to address A if Signed overflow flag is cleared
-  * BRVS A
+  * ```BRVS A```
     * Branch to address A if Signed overflow flag is set
