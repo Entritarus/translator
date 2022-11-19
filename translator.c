@@ -154,34 +154,43 @@ int translate(char *buf) {
 	if (comloc == NULL){
 		printf("Error: Unknown command\n");
 		return -1;
-	} else printf("Command found: %s\n", ASMcmd[cmd]);
-	
+	}
+	// check if OR instruction is actually ROR
+	if (buf != comloc) { 
+		// buf points at the first character of the buffer
+		// comloc points at the first character of the found instruction
+		// they are different if 
+		// 1. there are spaces before instruction
+		// 2. OR is actually ROR because strstr found OR in ROR
+		if (*(comloc-1) == 'R') cmd = ROR;
+	}
+	printf("Command found: %s\n", ASMcmd[cmd]);
 	unsigned int opcode = 0;
 	
 	switch(cmd) {
 		case ADD:
 		case ADC:
-		case INC:
-		case DEC:
-		case NEG:
+		case INC:// 1 operand
+		case DEC:// 1 operand
+		case NEG:// 1 operand
 		case SUB:
 		case SBC:
 		case MOV:
 		case AND:
 		case OR:
 		case XOR:
-		case NOT:
-		case LSL:
-		case LSR:
-		case ROL:
-		case ROR:
+		case NOT:// 1 operand
+		case LSL:// 1 operand
+		case LSR:// 1 operand
+		case ROL:// 1 operand
+		case ROR:// 1 operand
 		case CMP: { 
 			opcode |= (cmd == CMP) << 12 | (cmd == CMP ? SUB : cmd) << 4;
 			// ALU instructions and CMP are really similar, so they are joined
 			int Rd = 0, Rs = 0;
 			char command[5];
 			int count = sscanf(buf, "%s R%d, R%d", command, &Rd, &Rs); // get instruction and input parameters
-			if (count < 3) {
+			if (count < (cmd == INC || cmd == DEC || cmd == NEG || cmd == NOT || cmd == LSL || cmd == LSR || cmd == ROL || cmd == ROR ? 2 : 3)) { // instructions require 1 or 2 operands
 				printf("Error: %s: Not enough input parameters\n", command);
 				return -1;
 			}
@@ -191,7 +200,7 @@ int translate(char *buf) {
 				printf("Error: Rd must be in range 0..7\n");
 				return -1;
 			}
-			if (Rs >= 0 && Rs <= 7) { // check range for Rs
+			if (Rs >= 0 && Rs <= 7) { // check range for Rs. For single operand instructions Rs is always 0
 				opcode |= Rs << 0;
 			} else {
 				printf("Error: Rs must be in range 0..7\n");
