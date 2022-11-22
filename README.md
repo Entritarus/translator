@@ -35,19 +35,25 @@ translator <asm file name goes here>
 | ```LSR Rd```      | Logical shift right of Rd                              |
 | ```ROL Rd```      | Rotate Rd through carry to the left                    |
 | ```ROR Rd, Rs```  | Rotate Rd through carry to the right                   |
-| ----------------- | ------------------------------------------------------ |
-| ```CMP Rd, Rs ``` | Perform Rd - Rs and get SREG flags changed as a result |
-| ----------------- | ------------------------------------------------------ |
-| ```LDI Rd, A ```  | Load value A into Rd                                   |
-| ```LDR Rd, A```   | Load value from RAM at address A and store into Rd     |
-| ```STR Rd, A```   | Store value into RAM at address A from Rd              |
-| ----------------- | ------------------------------------------------------ |
-| ```JMP A```       | Jump to instruction A. Instructions start from 0       |
-| ```BRCC A```      | Branch to address A if Carry flag is cleared           |
-| ```BRCS A```      | Branch to address A if Carry flag is set               |
-| ```BRZC A```      | Branch to address A if Zero flag is cleared            |
-| ```BRZS A```      | Branch to address A if Zero flag is set                |
-| ```BRNC A```      | Branch to address A if Negative flag is cleared        |
-| ```BRNS A```      | Branch to address A if Negative flag is set            |
-| ```BRVC A```      | Branch to address A if Signed overflow flag is cleared |
-| ```BRVS A```      | Branch to address A if Signed overflow flag is set     |
+
+| Compare Instruction |                                                        |
+| ------------------- | ------------------------------------------------------ |
+| ```CMP Rd, Rs ```   | Perform Rd - Rs and get SREG flags changed as a result |
+
+| Interaction with RAM |                                                        |
+| -------------------- | ------------------------------------------------------ |
+| ```LDI Rd, A ```     | Load value A into Rd                                   |
+| ```LDR Rd, A```      | Load value from RAM at address A and store into Rd     |
+| ```STR Rd, A```      | Store value into RAM at address A from Rd              |
+
+| Jump/Branch Instructions|                                                        |
+| ----------------------- | ------------------------------------------------------ |
+| ```JMP A```             | Jump to instruction A. Instructions start from 0       |
+| ```BRCC A```            | Branch to address A if Carry flag is cleared           |
+| ```BRCS A```            | Branch to address A if Carry flag is set               |
+| ```BRZC A```            | Branch to address A if Zero flag is cleared            |
+| ```BRZS A```            | Branch to address A if Zero flag is set                |
+| ```BRNC A```            | Branch to address A if Negative flag is cleared        |
+| ```BRNS A```            | Branch to address A if Negative flag is set            |
+| ```BRVC A```            | Branch to address A if Signed overflow flag is cleared |
+| ```BRVS A```            | Branch to address A if Signed overflow flag is set     |
