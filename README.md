@@ -17,27 +17,27 @@ translator <asm file name goes here>
 4. Creates a .hex file with the same name as the input
 ## Supported instructions
 
-| ALU Instructions  | Description                                            |
-| ----------------- | ------------------------------------------------------ |
-| ```ADD Rd, Rs```  | Add two registers and store result in **Rd**               |
-| ```ADC Rd, Rs```  | Add two registers with carry and store result in **Rd**    |
-| ```INC Rd```      | Increment **Rd**                                           |
-| ```DEC Rd, Rs```  | Decrement **Rd**                                           |
-| ```NEG Rd, Rs```  | Negate **Rd**                                              |
-| ```SUB Rd, Rs```  | Subtract **Rs** from Rd and store result in Rd             |
-| ```SBC Rd, Rs```  | Subtract **Rs** from Rd with carry and store result in Rd  |
-| ```MOV Rd, Rs```  | Copy Rs to **Rd**                                          |
+| ALU Instructions  | Description                                                        |
+| ----------------- | ------------------------------------------------------------------ |
+| ```ADD Rd, Rs```  | Add two registers and store result in **Rd**                       |
+| ```ADC Rd, Rs```  | Add two registers with carry and store result in **Rd**            |
+| ```INC Rd```      | Increment **Rd**                                                   |
+| ```DEC Rd, Rs```  | Decrement **Rd**                                                   |
+| ```NEG Rd, Rs```  | Negate **Rd**                                                      |
+| ```SUB Rd, Rs```  | Subtract **Rs** from **Rd** and store result in **Rd**             |
+| ```SBC Rd, Rs```  | Subtract **Rs** from **Rd** with carry and store result in **Rd**  |
+| ```MOV Rd, Rs```  | Copy **Rs** to **Rd**                                              |
 | ```AND Rd, Rs```  | **Rd** & **Rs** and store result in **Rd**                         |
 | ```OR Rd, Rs```   | **Rd** | **Rs** and store result in **Rd**                         |
 | ```XOR Rd, Rs```  | **Rd** ^ **Rs** and store result in **Rd**                         |
-| ```NOT Rd```      | Invert all bits in **Rd**                                  |
-| ```LSL Rd```      | Logical shift left of **Rd**                               |
-| ```LSR Rd```      | Logical shift right of **Rd**                              |
-| ```ROL Rd```      | Rotate **Rd** through carry to the left                    |
-| ```ROR Rd, Rs```  | Rotate **Rd** through carry to the right                   |
+| ```NOT Rd```      | Invert all bits in **Rd**                                          |
+| ```LSL Rd```      | Logical shift left of **Rd**                                       |
+| ```LSR Rd```      | Logical shift right of **Rd**                                      |
+| ```ROL Rd```      | Rotate **Rd** through carry to the left                            |
+| ```ROR Rd, Rs```  | Rotate **Rd** through carry to the right                           |
 
-| Compare Instruction |                                                        |
-| ------------------- | ------------------------------------------------------ |
+| Compare Instruction |                                                                  |
+| --- | --- |
 | ```CMP Rd, Rs ```   | Perform **Rd** - **Rs** and get SREG flags changed as a result |
 
 | Interaction with RAM |                                                        |
