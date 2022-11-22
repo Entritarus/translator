@@ -36,17 +36,17 @@ translator <asm file name goes here>
 | ```ROL Rd```      | Rotate **Rd** through carry to the left                            |
 | ```ROR Rd, Rs```  | Rotate **Rd** through carry to the right                           |
 
-| Compare Instruction |                                                                  |
+| Compare Instruction | Description                                                      |
 | ------------------- | ---------------------------------------------------------------- |
 | ```CMP Rd, Rs ```   | Perform **Rd** - **Rs** and get SREG flags changed as a result   |
 
-| Interaction with RAM |                                                                |
+| Interaction with RAM | Description                                                               |
 | -------------------- | -------------------------------------------------------------- |
 | ```LDI Rd, A ```     | Load value **A** into **Rd**                                   |
 | ```LDR Rd, A```      | Load value from RAM at address **A** and store into **Rd**     |
 | ```STR Rd, A```      | Store value into RAM at address **A** from **Rd**              |
 
-| Jump/Branch Instructions|                                                            |
+| Jump/Branch Instructions| Description                                                           |
 | ----------------------- | ---------------------------------------------------------- |
 | ```JMP A```             | Jump to instruction **A**. Instructions start from 0       |
 | ```BRCC A```            | Branch to address **A** if Carry flag is cleared           |
