@@ -8,7 +8,7 @@
 // string length is always 1 symbol longer 
 // than the actual string length due to \0 symbol 
 
-#define CMD_CNT 29
+#define CMD_CNT 34
 #define CMD_LEN 5
 
 #define N_GPR 8
@@ -38,6 +38,7 @@ char ASMcmd[CMD_CNT][CMD_LEN] = {
 	"ROL",
 	"ROR",
 	"CMP",
+	"CPC",
 	"LDI",
 	"LDR",
 	"STR",
@@ -49,7 +50,11 @@ char ASMcmd[CMD_CNT][CMD_LEN] = {
 	"BRNC",
 	"BRNS",
 	"BRVC",
-	"BRVS"
+	"BRVS",
+	"PUSH",
+	"POP",
+	"CALL",
+	"RET"
 };
 
 typedef enum {
@@ -70,18 +75,23 @@ typedef enum {
 	ROL, // 14
 	ROR, // 15
 	CMP, // 16
-	LDI, // 17
-	LDR, // 18
-	STR, // 19
-	JMP, // 20
-	BRCC, // 21
-	BRCS, // 22
-	BRZC, // 23
-	BRZS, // 24
-	BRNC, // 25
-	BRNS, // 26
-	BRVC, // 27
-	BRVS // 28
+	CPC, // 17
+	LDI, // 18
+	LDR, // 19
+	STR, // 20
+	JMP, // 21
+	BRCC, // 22
+	BRCS, // 23
+	BRZC, // 24
+	BRZS, // 25
+	BRNC, // 26
+	BRNS, // 27
+	BRVC, // 28
+	BRVS, // 29
+	PUSH, // 30
+	POP, // 31
+	CALL, // 32
+	RET //33
 } cmd_t;
 
 int main(int argc, int **argv) {
@@ -172,7 +182,7 @@ int translate(char *buf) {
 		// comloc points at the first character of the found instruction
 		// they are different if 
 		// 1. there are spaces before instruction
-		// 2. OR is actually ROR or XOR because strstr can find OR in ROR and XOR
+		// 2. OR is actually ROR or XOR because strstr may find OR in ROR and XOR
 		if (*(comloc-1) == 'R') cmd = ROR;
 		if (*(comloc-1) == 'X') cmd = XOR;
 	}
@@ -196,9 +206,12 @@ int translate(char *buf) {
 		case LSR:// 1 operand
 		case ROL:// 1 operand
 		case ROR:// 1 operand
-		case CMP: { 
-			opcode |= (cmd == CMP) << 12 | (cmd == CMP ? SUB : cmd) << 4;
-			// ALU instructions and CMP are really similar, so they are joined
+		case CMP:
+		case CPC: { 
+			opcode |= (cmd == CMP || cmd == CPC) << 12;
+			opcode |= (cmd == CMP ? SUB : cmd) << 4;
+			opcode |= (cmd == CPC ? SBC : cmd) << 4;
+			// ALU instructions and CMP, CPC are really similar, so they are joined
 			int Rd = 0, Rs = 0;
 			char command[5];
 			int count = sscanf(buf, "%s R%d, R%d", command, &Rd, &Rs); // get instruction and input parameters
@@ -225,7 +238,7 @@ int translate(char *buf) {
 		case LDI:
 		case LDR:
 		case STR: {
-			opcode |= (cmd-15) << 12; // offset needed because the first 16 instructions are ALU instructions
+			opcode |= (cmd-16) << 12; // offset needed because the first 17 instructions are ALU instructions
 			int Rd = 0, A = 0;
 			char command[5];
 			int count = sscanf(buf, "%s R%d, %d", command, &Rd, &A); // get instruction and input parameters
@@ -266,16 +279,16 @@ int translate(char *buf) {
 		case BRNC:
 		case BRNS:
 		case BRVC:
-		case BRVS: {
-			
+		case BRVS:
+		case CALL:	{
 			if (cmd == JMP) {
 				opcode |= 0x5 << 12;
-			} else {
-				int condition = cmd - 21; // branch instructions start from 21 in the enum
+			} else if (cmd >= BRCC && cmd <= BRVS) {
+				int condition = cmd - BRCC; // branch instructions start from BRCC in the enum
 				opcode |= 0x6 << 12 | (condition & 0x01) << (2+8) | (condition & 0x6) << (8-1);
 				// construct opcode by formula
 				// 0110 0vff aaaa aaaa
-			}
+			} else opcode |= 0x9 << 12; // if cmd == CALL
 			int A = 0;
 			char command[5];
 			int count = sscanf(buf, "%s %d", command, &A); // get instruction and one input parameter
@@ -290,6 +303,27 @@ int translate(char *buf) {
 				return -1;
 			}
 		}
+		break;
+		
+		case PUSH:
+		case POP:
+			aopcode |= ((cmd == PUSH) ? 0x7 : 0x8) << 12;
+			int Rd = 0;
+			char command[5];
+			int count = sscanf(buf, "%s R%d", command, &Rd); // get instruction and input parameters
+			if (count < 2) {
+				printf("Error: %s: Not enough input parameters\n", command);
+				return -1;
+			}
+			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
+				opcode |= Rd << 8;
+			} else {
+				printf("Error: Rd must be in range 0..%d\n", MAX_GPR);
+				return -1;
+			}
+		break;
+		case RET:
+			opcode |= 0xA << 12;
 		break;
 	}
 	return opcode;
