@@ -40,13 +40,13 @@ translator <asm file name goes here>
 | ------------------- | ---------------------------------------------------------------- |
 | ```CMP Rd, Rs ```   | Perform **Rd** - **Rs** and get SREG flags changed as a result   |
 
-| Interaction with RAM | Description                                                               |
+| Interaction with RAM | Description                                                    |
 | -------------------- | -------------------------------------------------------------- |
 | ```LDI Rd, A ```     | Load value **A** into **Rd**                                   |
 | ```LDR Rd, A```      | Load value from RAM at address **A** and store into **Rd**     |
 | ```STR Rd, A```      | Store value into RAM at address **A** from **Rd**              |
 
-| Jump/Branch Instructions| Description                                                           |
+| Jump/Branch Instructions| Description                                                |
 | ----------------------- | ---------------------------------------------------------- |
 | ```JMP A```             | Jump to instruction **A**. Instructions start from 0       |
 | ```BRCC A```            | Branch to address **A** if Carry flag is cleared           |
@@ -57,3 +57,13 @@ translator <asm file name goes here>
 | ```BRNS A```            | Branch to address **A** if Negative flag is set            |
 | ```BRVC A```            | Branch to address **A** if Signed overflow flag is cleared |
 | ```BRVS A```            | Branch to address **A** if Signed overflow flag is set     |
+
+| Stack operations | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| ```PUSH Rd```    | Push register **Rd** value onto the stack       |
+| ```POP Rd```     | Pop value from the stack and store it in **Rd** |
+
+| CALL, RET instructions | Description                         |
+| ------------ | --------------------------------------------- |
+| ```CALL A``` | Direct subroutine call, 0 <= **A** < ROM size |
+| ```RET```    | Return from subroutine                        |
