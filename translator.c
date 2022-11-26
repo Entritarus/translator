@@ -307,7 +307,7 @@ int translate(char *buf) {
 		
 		case PUSH:
 		case POP:
-			aopcode |= ((cmd == PUSH) ? 0x7 : 0x8) << 12;
+			opcode |= ((cmd == PUSH) ? 0x7 : 0x8) << 12;
 			int Rd = 0;
 			char command[5];
 			int count = sscanf(buf, "%s R%d", command, &Rd); // get instruction and input parameters
