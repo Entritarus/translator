@@ -19,7 +19,7 @@ translator <asm file name goes here>
 
 | ALU Instructions  | Description                                                        |
 | ----------------- | ------------------------------------------------------------------ |
-| ```ADD Rd, Rs```  | Add two registers and store result in **Rd**                       |
+| ```ADD **Rd**, Rs```  | Add two registers and store result in **Rd**                       |
 | ```ADC Rd, Rs```  | Add two registers with carry and store result in **Rd**            |
 | ```INC Rd```      | Increment **Rd**                                                   |
 | ```DEC Rd, Rs```  | Decrement **Rd**                                                   |
