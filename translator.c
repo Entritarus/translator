@@ -209,8 +209,7 @@ int translate(char *buf) {
 		case CMP:
 		case CPC: { 
 			opcode |= (cmd == CMP || cmd == CPC) << 12;
-			opcode |= (cmd == CMP ? SUB : cmd) << 4;
-			opcode |= (cmd == CPC ? SBC : cmd) << 4;
+			opcode |= (cmd == CMP ? SUB : (cmd == CPC ? SBC : cmd)) << 4;
 			// ALU instructions and CMP, CPC are really similar, so they are joined
 			int Rd = 0, Rs = 0;
 			char command[5];
@@ -220,12 +219,14 @@ int translate(char *buf) {
 				printf("Error: %s: Not enough input parameters\n", command);
 				return -1;
 			}
+				
 			if (Rd >= 0 && Rd < N_GPR) { // check range for Rd
 				opcode |= Rd << 8;
 			} else {
 				printf("Error: Rd must be in range 0..%d\n", MAX_GPR);
 				return -1;
 			}
+			
 			if (Rs >= 0 && Rs < N_GPR) { // check range for Rs. For single operand instructions Rs is always 0
 				opcode |= Rs << 0;
 			} else {
