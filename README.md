@@ -6,7 +6,6 @@
 * Max instruction count is 256 due to ROM size
 * RAM size is 16 bytes
 * Only one instruction per line
-* The rest is pretty much the same as in the AVR assembler
 ## How to use
 1. Compile it
 2. Open terminal
