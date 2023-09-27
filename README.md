@@ -1,7 +1,7 @@
 # A Translator for Logisim MPU
 ###### Converts your assembly code into hex machine code
 
-## Conventions
+## Limitations
 * Max line length is 120 characters
 * Max instruction count is 256 due to ROM size
 * RAM size is 16 bytes
